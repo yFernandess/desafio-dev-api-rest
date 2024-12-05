@@ -23,3 +23,7 @@ class RequestCreateAccountInterface(CustomBaseModel):
 
 class RequestBlockAccountInterface(CustomBaseModel):
     account_id: int
+
+
+class RequestUnblockAccountInterface(CustomBaseModel):
+    account_id: int

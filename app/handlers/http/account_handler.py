@@ -11,12 +11,14 @@ from app.config.exceptions.general import ExceptionMessageBuilder
 from app.interfaces.account import (
     RequestBlockAccountInterface,
     RequestCreateAccountInterface,
+    RequestUnblockAccountInterface,
 )
 from app.interfaces.account_owner import RequestCreateAccountOwnerInterface, RequestRemoveAccountOwnerInterface
 from app.services.account_service import AccountService
 
 from app.utils import generate_error_response
 
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger()
 router = InferringRouter()
 
@@ -114,7 +116,7 @@ class AccountHandler:
         status_code=status.HTTP_200_OK,
         tags=["AccountHandler"],
     )
-    async def unblock_account(self, payload: RequestBlockAccountInterface):
+    async def unblock_account(self, payload: RequestUnblockAccountInterface):
         try:
             response = await self._account_service.unblock_account(payload=payload)
             return JSONResponse(content=jsonable_encoder(response), status_code=status.HTTP_200_OK)

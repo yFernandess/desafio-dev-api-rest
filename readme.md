@@ -48,3 +48,6 @@ Desenvolva o case seguindo as melhores práticas que julgar necessário, aplique
       2. Crie um repositório privado no seu github para o projeto e adicione como colaborador, os usuários informados no email pelo time de recrutameto ;
       3. Após concluir seu trabalho faça um push; 
       4. Envie um e-mail à pessoa que está mantendo o contato com você durante o processo notificando a finalização do desafio para validação.
+
+
+      DOING

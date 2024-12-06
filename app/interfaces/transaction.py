@@ -18,3 +18,9 @@ class RequestDepositInterface(CustomBaseModel):
 class RequestWithdrawInterface(CustomBaseModel):
     account_id: int
     amount: float
+
+
+class RequestStatementInterface(CustomBaseModel):
+    account_id: int
+    start_date: Optional[str]
+    end_date: Optional[str]

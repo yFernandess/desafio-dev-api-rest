@@ -1,5 +1,6 @@
 from datetime import datetime
 import logging
+from typing import List
 
 from app.config.enums.account import AccountStates
 from app.config.enums.transaction import TransactionType
@@ -8,7 +9,9 @@ from app.config.exceptions.general import (
 )
 from app.database.repositories.account_repository import AccountRepository
 from app.database.repositories.transaction_repository import TransactionRepository
-from app.interfaces.transaction import RequestDepositInterface, RequestWithdrawInterface, TransactionInterface
+from app.interfaces.transaction import (
+    RequestDepositInterface, RequestStatementInterface, RequestWithdrawInterface, TransactionInterface
+)
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger()
@@ -22,7 +25,21 @@ class TransactionService:
     ):
         self._account_repository = account_repository or AccountRepository()
         self._transaction_repository = transaction_repository or TransactionRepository()
-    
+
+    async def get_statement_by_period(self, payload: RequestStatementInterface) -> List[TransactionInterface]:
+        try:
+            logger.info(f"Getting statement for account: {payload.account_id}")
+            transactions = await self._transaction_repository.get_transactions_by_period(
+                account_id=payload.account_id,
+                start_date=payload.start_date,
+                end_date=payload.end_date,
+            )
+            logger.info(f"Got statement for account: {payload.account_id}")
+            return [TransactionInterface(**transaction) for transaction in transactions]
+        except Exception as e:
+            logger.error(f"Unable to get statement for account: {payload.account_id}. Error: {e}")
+            raise e
+
     async def deposit(self, payload: RequestDepositInterface) -> TransactionInterface:
         try:
             logger.info(f"Depositing {payload.amount} to account: {payload.account_id}")

@@ -10,6 +10,7 @@ import logging
 from app.config.exceptions.general import ExceptionMessageBuilder
 from app.interfaces.account import (
     RequestBlockAccountInterface,
+    RequestCloseAccountInterface,
     RequestCreateAccountInterface,
     RequestUnblockAccountInterface,
 )
@@ -91,6 +92,25 @@ class AccountHandler:
             logger.error(f"Failed {err}")
             return generate_error_response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content={})
 
+    @router.get(
+        "/{account_id}",
+        description="Get account by account_id",
+        status_code=status.HTTP_200_OK,
+        tags=["AccountHandler"],
+    )
+    async def get_account(self, account_id: int):
+        try:
+            response = await self._account_service.get_account(account_id=account_id)
+            return JSONResponse(content=jsonable_encoder(response), status_code=status.HTTP_200_OK)
+        except ExceptionMessageBuilder as ex:
+            return JSONResponse(
+                content={"title": ex.title, "message": ex.message},
+                status_code=ex.status_code,
+            )
+        except Exception as err:
+            logger.error(f"Failed {err}")
+            return generate_error_response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content={})
+
     @router.post(
         "/block",
         description="Block an account",
@@ -119,6 +139,25 @@ class AccountHandler:
     async def unblock_account(self, payload: RequestUnblockAccountInterface):
         try:
             response = await self._account_service.unblock_account(payload=payload)
+            return JSONResponse(content=jsonable_encoder(response), status_code=status.HTTP_200_OK)
+        except ExceptionMessageBuilder as ex:
+            return JSONResponse(
+                content={"title": ex.title, "message": ex.message},
+                status_code=ex.status_code,
+            )
+        except Exception as err:
+            logger.error(f"Failed {err}")
+            return generate_error_response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content={})
+
+    @router.post(
+        "/close",
+        description="Close an account",
+        status_code=status.HTTP_200_OK,
+        tags=["AccountHandler"],
+    )
+    async def close_account(self, payload: RequestCloseAccountInterface):
+        try:
+            response = await self._account_service.close_account(payload=payload)
             return JSONResponse(content=jsonable_encoder(response), status_code=status.HTTP_200_OK)
         except ExceptionMessageBuilder as ex:
             return JSONResponse(

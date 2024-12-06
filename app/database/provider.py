@@ -1,9 +1,6 @@
 import os
 
-from peewee import DatabaseProxy, Model, SqliteDatabase
-# from playhouse.sqlite_ext import SqliteExtDatabase
-
-from app.config.settings import Settings
+from peewee import Model, SqliteDatabase
 
 
 class DataBaseProvider:

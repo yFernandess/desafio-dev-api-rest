@@ -13,8 +13,11 @@ class AccountInterface(CustomTimableModel):
     agency: Optional[str] = "0001"
     checking_account_number: int
     state: AccountStates = AccountStates.ACTIVE
+    balance: float = 0.0
+    daily_limit: float = 2000.0
     account_owner: Union[AccountOwnerInterface, int]
     updated_at: Optional[datetime]
+    closed_at: Optional[datetime]
 
 
 class RequestCreateAccountInterface(CustomBaseModel):
@@ -26,4 +29,8 @@ class RequestBlockAccountInterface(CustomBaseModel):
 
 
 class RequestUnblockAccountInterface(CustomBaseModel):
+    account_id: int
+
+
+class RequestCloseAccountInterface(CustomBaseModel):
     account_id: int

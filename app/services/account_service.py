@@ -2,10 +2,15 @@ import logging
 import random
 
 from app.config.enums.account import AccountStates
+from app.config.exceptions.general import ObjectNotFound
 from app.database.repositories.account_owner_repository import AccountOwnerRepository
 from app.database.repositories.account_repository import AccountRepository
 from app.interfaces.account import (
-    AccountInterface, RequestBlockAccountInterface, RequestCreateAccountInterface, RequestUnblockAccountInterface
+    AccountInterface,
+    RequestBlockAccountInterface,
+    RequestCloseAccountInterface,
+    RequestCreateAccountInterface,
+    RequestUnblockAccountInterface
 )
 from app.interfaces.account_owner import (
     AccountOwnerInterface, RequestCreateAccountOwnerInterface, RequestRemoveAccountOwnerInterface
@@ -63,13 +68,22 @@ class AccountService:
             logger.error(f"Unable to create account. Error: {e}")
             raise e
 
+    async def get_account(self, account_id: int) -> AccountInterface:
+        try:
+            logger.info(f"Getting account with account_id: {account_id}")
+            account = await self.account_repository.get_account_by_id(account_id)
+            logger.info(f"Account with account_id: {account_id} retrieved")
+            return account
+        except ObjectNotFound as e:
+            logger.error(f"Unable to get account with account_id: {account_id}. Error: {e}")
+            raise e
+
     async def block_account(self, payload: RequestBlockAccountInterface):
         try:
             logger.info(f"Blocking account with account_id: {payload.account_id}")
 
             account_updated = await self.account_repository.block_account(
                 account_id=payload.account_id,
-                state=AccountStates.BLOCKED.value,
             )
             logger.info(f"Account with account_id: {payload.account_id} blocked")
             return account_updated
@@ -80,11 +94,23 @@ class AccountService:
         try:
             logger.info(f"Unblocking account with account_id: {payload.account_id}")
 
-            account_updated = await self.account_repository.block_account(
+            account_updated = await self.account_repository.unblock_account(
                 account_id=payload.account_id,
-                state=AccountStates.ACTIVE.value,
             )
             logger.info(f"Account with account_id: {payload.account_id} unblocked")
             return account_updated
         except Exception as e:
             logger.error(f"Unable to unblock account with account_id: {payload.account_id}. Error: {e}")
+
+    async def close_account(self, payload: RequestCloseAccountInterface):
+        try:
+            logger.info(f"Closing account with account_id: {payload.account_id}")
+
+            account_updated = await self.account_repository.close_account(
+                account_id=payload.account_id,
+                state=AccountStates.CLOSED.value
+            )
+            logger.info(f"Account with account_id: {payload.account_id} closed")
+            return account_updated
+        except Exception as e:
+            logger.error(f"Unable to close account with account_id: {payload.account_id}. Error: {e}")

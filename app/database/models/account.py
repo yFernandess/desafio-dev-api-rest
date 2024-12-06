@@ -4,7 +4,8 @@ from peewee import (
     ForeignKeyField,
     CharField,
     IntegerField,
-    DateTimeField
+    DateTimeField,
+    DecimalField,
 )
 from playhouse.shortcuts import model_to_dict
 
@@ -21,9 +22,12 @@ class AccountEntity(BaseModel):
     agency = CharField(max_length=10, default="0001")
     checking_account_number = IntegerField()
     state = CharField(default=AccountStates.ACTIVE.value)
+    balance = DecimalField(default=0.0)
+    daily_limit = DecimalField(default=2000.0)
     account_owner = ForeignKeyField(AccountOwnerEntity, backref="accounts")
     created_at = DateTimeField(default=datetime.now)
     updated_at = DateTimeField(null=True)
+    closed_at = DateTimeField(null=True)
 
     class Meta:
         table_name = "account"

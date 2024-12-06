@@ -1,20 +1,15 @@
 import sys
 import os
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from fastapi import APIRouter, FastAPI
+from fastapi import FastAPI
 import uvicorn
-from fastapi.responses import JSONResponse
-from fastapi.exceptions import RequestValidationError
-from starlette.requests import Request
-from starlette.exceptions import HTTPException as StarletteHTTPException
-
-# from app.handlers.http.account_handler import AccountHandler
 
 from app.config.settings import Settings
 
-# from app.database import db
 from app.handlers.http.account_handler import AccountHandler
+from app.handlers.http.transaction_handler import TransactionHandler
 
 
 API_VERSION = "v1"
@@ -31,6 +26,12 @@ def create_app() -> FastAPI:
         AccountHandler().get_router(),
         prefix=f"/{API_VERSION}/accounts",
         tags=["AccountHandler"],
+    )
+
+    app.include_router(
+        TransactionHandler().get_router(),
+        prefix=f"/{API_VERSION}/transactions",
+        tags=["TransactionHandler"],
     )
 
     return app

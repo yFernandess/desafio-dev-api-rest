@@ -17,8 +17,8 @@ API_VERSION = "v1"
 
 def create_app() -> FastAPI:
     app = FastAPI(
-        title="Core Boiler API",
-        description="Base for new microsservices",
+        title="Core Accounts API",
+        description="Simple bank account management",
         version=API_VERSION,
     )
 

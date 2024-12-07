@@ -1,3 +1,5 @@
+[![Python application](https://github.com/yFernandess/desafio-dev-api-rest/actions/workflows/python-app.yml/badge.svg)](https://github.com/yFernandess/desafio-dev-api-rest/actions/workflows/python-app.yml)
+
 # Desafio Dev API REST
 
 Este é um projeto de API REST para gerenciamento de contas bancárias.

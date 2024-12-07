@@ -1,3 +1,4 @@
+from datetime import date
 from typing import Optional, Union
 from app.interfaces import CustomBaseModel, CustomTimableModel
 from app.interfaces.account import AccountInterface
@@ -22,5 +23,5 @@ class RequestWithdrawInterface(CustomBaseModel):
 
 class RequestStatementInterface(CustomBaseModel):
     account_id: int
-    start_date: Optional[str]
-    end_date: Optional[str]
+    start_date: date
+    end_date: date

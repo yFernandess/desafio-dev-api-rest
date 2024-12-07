@@ -12,11 +12,18 @@ class ExceptionMessageBuilder(Exception):
 
 class ObjectNotFound(ExceptionMessageBuilder):
     def __init__(self, ex_info: ExceptionInterface = None, object_name: str = ""):
-        ex_info = ex_info or ExceptionInterface(
-            title="Object " + object_name + " not found",
-            message="Account not found",
-            status_code=status.HTTP_404_NOT_FOUND,
-        )
+        if isinstance(ex_info, str):
+            ex_info = ExceptionInterface(
+                title="Object " + object_name + " not found",
+                message=ex_info,
+                status_code=status.HTTP_404_NOT_FOUND,
+            )
+        elif ex_info is None:
+            ex_info = ExceptionInterface(
+                title="Object " + object_name + " not found",
+                message="Account not found",
+                status_code=status.HTTP_404_NOT_FOUND,
+            )
         super(ObjectNotFound, self).__init__(ex_info=ex_info)
 
 

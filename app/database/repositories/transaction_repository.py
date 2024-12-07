@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from typing import List
 from peewee import fn
 
@@ -38,22 +38,17 @@ class TransactionRepository():
 
     @db.atomic()
     async def get_transactions_by_period(
-        self, account_id: int, start_date: datetime, end_date: datetime
+        self, account_id: int, start_date: date, end_date: date
     ) -> List[TransactionEntity]:
         try:
-            import pdb; pdb.set_trace()
-            start_date = datetime.strptime(start_date, "%Y-%m-%d")
-            end_date = datetime.strptime(end_date, "%Y-%m-%d")
-            import pdb; pdb.set_trace()
-
             query = (TransactionEntity
                     .select()
                     .where(
                         (TransactionEntity.account == account_id) &
-                        (TransactionEntity.created_at >= start_date) &
-                        (TransactionEntity.created_at <= end_date)
+                        (fn.DATE(TransactionEntity.created_at) >= start_date) &
+                        (fn.DATE(TransactionEntity.created_at) <= end_date)
                     )
-                    .order_by(TransactionEntity.created_at))
+                    .order_by(TransactionEntity.created_at.desc()))
             return list(query)
         except Exception as e:
             raise e

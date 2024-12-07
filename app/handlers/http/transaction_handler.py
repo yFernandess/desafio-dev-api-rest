@@ -1,4 +1,5 @@
-from typing import Optional
+from datetime import date
+
 from fastapi import Query, status
 
 from fastapi_utils.inferring_router import InferringRouter
@@ -37,7 +38,10 @@ class TransactionHandler:
         tags=["TransactionHandler"],
     )
     async def get_statement_by_period(
-        self, account_id: int, start_date: Optional[str] = Query(), end_date: Optional[str] = Query()
+        self,
+        account_id: int,
+        start_date: date = Query(description="Start date in YYYY-MM-DD format"),
+        end_date: date = Query(description="End date in YYYY-MM-DD format")
     ):
         try:
             payload = RequestStatementInterface(

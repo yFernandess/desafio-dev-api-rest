@@ -1,6 +1,7 @@
 from datetime import datetime
 import logging
 from typing import List
+from playhouse.shortcuts import model_to_dict
 
 from app.config.enums.account import AccountStates
 from app.config.enums.transaction import TransactionType
@@ -35,7 +36,7 @@ class TransactionService:
                 end_date=payload.end_date,
             )
             logger.info(f"Got statement for account: {payload.account_id}")
-            return [TransactionInterface(**transaction) for transaction in transactions]
+            return [TransactionInterface(**model_to_dict(transaction)) for transaction in transactions]
         except Exception as e:
             logger.error(f"Unable to get statement for account: {payload.account_id}. Error: {e}")
             raise e

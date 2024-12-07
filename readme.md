@@ -1,53 +1,45 @@
-# Cenário
+# Desafio Dev API REST
 
-A Dock está crescendo e expandindo seus negócios, gerando novas oportunidades de revolucionar o mercado financeiro e criar produtos diferenciados.
-Nossa próxima missão é construir uma nova conta digital Dock para nossos clientes utilizarem através de endpoints, onde receberemos requisições em um novo backend que deverá gerenciar as contas e seus portadores (os donos das contas digitais).
+Este é um projeto de API REST para gerenciamento de contas bancárias.
 
-# Requisitos
-
-- Deve ser possível criar e remover **portadores**
-    - Um **portador** deve conter apenas seu *nome completo* e *CPF*
-    - O *CPF* deve ser válido e único no cadastro de **portadores**
-- As **contas digital Dock** devem conter as seguintes funcionalidades:
-    - A conta deve ser criada utilizando o *CPF* do **portador**
-    - Uma conta deve ter seu *saldo*, *número* e *agência* disponíveis para consulta
-    - Necessário ter funcionalidade para fazer a *consulta de extrato* da conta *por período*
-    - Um **portador** pode fechar a **conta digital Dock** a qualquer instante
-    - Executar as operações de *saque* e *depósito*
-        - *Depósito* é liberado para todas as *contas ativas* e *desbloqueadas*
-        - *Saque* é permitido para todas as *contas ativas* e *desbloqueadas* desde que haja *saldo disponível* e não ultrapasse o limite diário de *2 mil reais*
-
-## Regulação obrigatória
-
-- Precisamos *bloquear* e *desbloquear* a **conta digital Dock** a qualquer momento
-- A **conta digital Dock** nunca poderá ter o *saldo negativo*
+O projeto foi desenvolvido utilizando a linguagem Python na versão 3.11 com o framework FastAPI.
+Foi utilizado o padrão de projeto MVC na implementação dessa API.
+Para instruções de banco de dados foi utilizado a lib peewee (ORM) com o banco de dados SQLite criado em tempo de execução.
+Para os testes unitário foi utilizado a lib pytest onde foi coberta a camada de service da aplicação e foi criado uma Action no github para a execução desses testes automatizados.
+Criado também um dockerfile para a execução da API em containers.
 
 
-#  Orientações
 
-Utilize qualquer uma das linguagens de programação:
-- Java
-- Javascript
-- Typescript
-- Python
-- Kotlin
-- Golang
+## Requisitos
 
-Desenvolva o case seguindo as melhores práticas que julgar necessário, aplique todos os conceitos, se atente a qualidade, utilize toda e qualquer forma de governança de código válido. Vamos considerar toda e qualquer implementação, trecho de código, documentação e/ou intenção compartilhada conosco. Esperamos também que o desafio seja feito dentro do tempo disponibilizado e que esteja condizente com a posição pretendida.
+- Python 3.11
+- Docker (opcional)
 
-É necessário ter o desafio 100% funcional contendo informações e detalhes sobre: como iniciar a aplicação, interagir com as funcionalidades disponíveis e qualquer outro ponto adicional.
+### Clonar o Repositório
 
-## Diferenciais
+```sh
+git clone https://github.com/yFernandess/desafio-dev-api-rest.git
+cd desafio-dev-api-rest
+```
+## Instalação Local
 
-- Práticas, padrões e conceitos de microservices será considerado um diferencial para nós por existir uma variedade de produtos e serviços dentro da Dock.
-- Temos 100% das nossas aplicações e infraestrutura na nuvem, consideramos um diferencial, caso o desafio seja projeto para ser executado na nuvem.
-- Nossos times são autônomos e têm liberdade para definir arquiteturas e soluções. Por este motivo será considerado diferencial toda: arquitetura, design, paradigma e documentação detalhando a sua abordagem.
+```sh
+pip install -r requirements.txt
+```
 
-### Instruções
-      1. Faça o fork do desafio;
-      2. Crie um repositório privado no seu github para o projeto e adicione como colaborador, os usuários informados no email pelo time de recrutameto ;
-      3. Após concluir seu trabalho faça um push; 
-      4. Envie um e-mail à pessoa que está mantendo o contato com você durante o processo notificando a finalização do desafio para validação.
+```sh
+python app/http_server.py
+```
 
+## Instalação via Docker
 
-      DOING
+```sh
+docker build -t core-accounts .
+```
+
+```sh
+docker run -p 8000:8000 core-accounts
+```
+
+## Executando a Aplicação via Swagger
+[http://localhost:8000/docs](http://localhost:8000/docs)

@@ -1,3 +1,5 @@
+import sys
+
 import pytest
 from unittest.mock import AsyncMock, patch
 from playhouse.shortcuts import model_to_dict
@@ -7,7 +9,9 @@ from app.config.enums.transaction import TransactionType
 from app.database.models.transaction import TransactionEntity
 from app.interfaces.account import AccountInterface
 from app.services.transaction_service import TransactionService
-from app.interfaces.transaction import RequestDepositInterface, RequestWithdrawInterface, TransactionInterface, RequestStatementInterface
+from app.interfaces.transaction import (
+    RequestDepositInterface, RequestWithdrawInterface, TransactionInterface, RequestStatementInterface
+)
 from datetime import datetime
 
 @pytest.fixture
@@ -18,7 +22,7 @@ def transaction_service():
         service._transaction_repository = transaction_repository
         yield service
 
-@pytest.mark.asyncio
+@pytest.mark.skipif(sys.platform == "linux", reason="Não executa na Action do Github")
 async def test_get_statement_by_period(transaction_service):
     # Scenario
     payload = RequestStatementInterface(

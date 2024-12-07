@@ -31,14 +31,14 @@ async def test_get_statement_by_period(transaction_service):
             transaction_id=1,
             account=1,
             amount=100.0,
-            transaction_type=TransactionType.DEPOSIT,
+            transaction_type=TransactionType.DEPOSIT.value,
             created_at=datetime(2023, 1, 10)
         ),
         TransactionEntity(
             transaction_id=2,
             account=1,
             amount=-50.0,
-            transaction_type=TransactionType.WITHDRAW,
+            transaction_type=TransactionType.WITHDRAW.value,
             created_at=datetime(2023, 1, 15)
         )
     ]

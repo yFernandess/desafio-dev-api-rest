@@ -59,6 +59,7 @@ desafio-dev-api-rest/
 │   │   ├── __init__.py
 │   │   ├── enums
 │   │   │   ├── account.py
+│   │   │   ├── transaction.py
 │   │   ├── exceptions
 │   │   │   ├── general.py
 │   ├── database
@@ -81,12 +82,13 @@ desafio-dev-api-rest/
 │   │   ├── account.py
 │   │   ├── account_owner.py
 │   │   ├── transaction.py
+│   │   ├── exceptions.py
 │   ├── services
 │   │   ├── __init__.py
 │   │   ├── account_service.py
 │   │   ├── transaction_service.py
 │   ├── http_server.py
-├── tests
+├── unit_tests
 │   ├── unit
 │   │   ├── services
 │   │   │   ├── test_account_service.py

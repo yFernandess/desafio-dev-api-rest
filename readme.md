@@ -45,3 +45,97 @@ docker run -p 8000:8000 core-accounts
 
 ## Executando a Aplicação via Swagger
 [http://localhost:8000/docs](http://localhost:8000/docs)
+
+
+## Estrutura do Projeto
+
+A estrutura de diretórios e arquivos do projeto é a seguinte:
+
+```
+desafio-dev-api-rest/
+.
+├── app
+│   ├── config
+│   │   ├── __init__.py
+│   │   ├── enums
+│   │   │   ├── account.py
+│   │   ├── exceptions
+│   │   │   ├── general.py
+│   ├── database
+│   │   ├── __init__.py
+│   │   ├── models
+│   │   │   ├── account.py
+│   │   │   ├── account_owner.py
+│   │   │   ├── transaction.py
+│   │   ├── repositories
+│   │   │   ├── account_repository.py
+│   │   │   ├── account_owner_repository.py
+│   │   │   ├── transaction_repository.py
+│   │   ├── provider.py
+│   ├── handlers
+│   │   ├── http
+│   │   │   ├── account_handler.py
+│   │   │   ├── transaction_handler.py
+│   ├── interfaces
+│   │   ├── __init__.py
+│   │   ├── account.py
+│   │   ├── account_owner.py
+│   │   ├── transaction.py
+│   ├── services
+│   │   ├── __init__.py
+│   │   ├── account_service.py
+│   │   ├── transaction_service.py
+│   ├── http_server.py
+├── tests
+│   ├── unit
+│   │   ├── services
+│   │   │   ├── test_account_service.py
+│   │   │   ├── test_transaction_service.py
+├── Dockerfile
+├── requirements.txt
+├── README.md
+```
+
+## Endpoints da API
+
+### 1. Gerenciamento de Contas
+
+#### Criar Conta
+- **URL:** `/accounts`
+- **Método:** `POST`
+- **Descrição:** Cria uma nova conta bancária.
+  ```
+
+#### Obter Conta
+- **URL:** `/accounts/{account_id}`
+- **Método:** `GET`
+- **Descrição:** Obtém os detalhes de uma conta bancária específica.
+  ```
+
+### 2. Gerenciamento de Transações
+
+#### Criar Transação
+- **URL:** `/transactions`
+- **Método:** `POST`
+- **Descrição:** Cria uma nova transação para uma conta bancária.
+  ```
+
+#### Obter Transações
+- **URL:** `/accounts/{account_id}/transactions`
+- **Método:** `GET`
+- **Descrição:** Obtém todas as transações de uma conta bancária específica.
+  ```
+
+### 3. Gerenciamento de Proprietários de Contas
+
+#### Criar Proprietário de Conta
+- **URL:** `/account_owners`
+- **Método:** `POST`
+- **Descrição:** Cria um novo proprietário de conta.
+  ```
+
+#### Obter Proprietário de Conta
+- **URL:** `/account_owners/{account_owner_id}`
+- **Método:** `GET`
+- **Descrição:** Obtém os detalhes de um proprietário de conta específico.
+  ```

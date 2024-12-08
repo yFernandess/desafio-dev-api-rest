@@ -102,42 +102,54 @@ desafio-dev-api-rest/
 
 ### 1. Gerenciamento de Contas
 
-#### Criar Conta
-- **URL:** `/accounts`
+#### Criar um proprietário de uma conta
+- **URL:** `/owner`
 - **Método:** `POST`
-- **Descrição:** Cria uma nova conta bancária.
-  ```
+- **Descrição:** Cria um proprietário de uma conta bancária.
+
+#### Excluir um proprietário de uma conta
+- **URL:** `/owner/{cpf}`
+- **Método:** `DELETE`
+- **Descrição:** Exclui um proprietário de uma conta bancária.
+
+#### Criar uma nova conta
+- **URL:** `/create`
+- **Método:** `POST`
+- **Descrição:** Cria uma nova conta bancária vinculada ao proprietário.
 
 #### Obter Conta
 - **URL:** `/accounts/{account_id}`
 - **Método:** `GET`
 - **Descrição:** Obtém os detalhes de uma conta bancária específica.
-  ```
+
+#### Bloquear uma conta
+- **URL:** `/block`
+- **Método:** `POST`
+- **Descrição:** Bloqueia uma conta bancária vinculada ao proprietário.
+
+#### Desbloquear uma conta
+- **URL:** `/unblock`
+- **Método:** `POST`
+- **Descrição:** Desbloqueia uma conta bancária vinculada ao proprietário.
+
+#### Fechar uma conta
+- **URL:** `/close`
+- **Método:** `POST`
+- **Descrição:** Encerra uma conta bancária vinculada ao proprietário.
 
 ### 2. Gerenciamento de Transações
 
-#### Criar Transação
-- **URL:** `/transactions`
-- **Método:** `POST`
-- **Descrição:** Cria uma nova transação para uma conta bancária.
-  ```
-
-#### Obter Transações
-- **URL:** `/accounts/{account_id}/transactions`
+#### Buscar extrato bancário por período
+- **URL:** `/statement/{account_id}`
 - **Método:** `GET`
-- **Descrição:** Obtém todas as transações de uma conta bancária específica.
-  ```
+- **Descrição:** Busca as transações de uma conta por período.
 
-### 3. Gerenciamento de Proprietários de Contas
-
-#### Criar Proprietário de Conta
-- **URL:** `/account_owners`
+#### Realizar um depósito bancário
+- **URL:** `/deposit`
 - **Método:** `POST`
-- **Descrição:** Cria um novo proprietário de conta.
-  ```
+- **Descrição:** Realiza um depósito em uma conta bancária específica.
 
-#### Obter Proprietário de Conta
-- **URL:** `/account_owners/{account_owner_id}`
-- **Método:** `GET`
-- **Descrição:** Obtém os detalhes de um proprietário de conta específico.
-  ```
+#### Realizar um saque bancário
+- **URL:** `/withdraw`
+- **Método:** `POST`
+- **Descrição:** Realiza um saque em uma conta bancária específica.
